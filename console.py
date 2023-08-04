@@ -119,7 +119,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
         classs = args.split(" ")[0]
-        param = args.split(" ")[1:]
+        param = args.split()[1:]
         if classs not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
@@ -130,8 +130,8 @@ class HBNBCommand(cmd.Cmd):
             value = x[1]
             if "\"" in value:
                 value = value.strip("\"")
-            if "_" in value:
-                value = value.replace("_", " ")
+                if "_" in value:
+                    value = value.replace("_", " ")
             elif "." in value:
                 value = float(value)
             else:
