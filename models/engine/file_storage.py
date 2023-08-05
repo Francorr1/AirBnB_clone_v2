@@ -16,6 +16,13 @@ class FileStorage:
         """Adds new object to storage dictionary"""
         self.all().update({obj.to_dict()['__class__'] + '.' + obj.id: obj})
 
+    def delete(self, obj=None):
+        """Detes an object"""
+        if obj:
+            key = obj.__class__.__name__ + "." + obj.id
+            del FileStorage.__objects[key]
+            self.save()
+
     def save(self):
         """Saves storage dictionary to file"""
         with open(FileStorage.__file_path, 'w') as f:
@@ -24,13 +31,6 @@ class FileStorage:
             for key, val in temp.items():
                 temp[key] = val.to_dict()
             json.dump(temp, f)
-
-    def delete(self, obj=None):
-        """Detes an object"""
-        if obj:
-            key = obj.__class__.__name__ + "." + obj.id
-            del FileStorage.__objects[key]
-            self.save()
 
     def reload(self):
         """Loads storage dictionary from file"""
